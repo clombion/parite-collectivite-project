@@ -46,7 +46,7 @@ Pour vérifier que le nombre de lignes des fichiers textes correspond bien aux n
 
 qui donne :
 
-```shell
+```
 7991 attributions.txt
 650 competences.txt
 650 categories.txt
@@ -66,12 +66,14 @@ Ici le focus est sur le rapprochement des jeux de données attributions et comp�
 
 var0="administration"
 
+```shell
 while read -r var1 <&3 && read var2 <&4 
 do 
 if [ "$var0" == "$var2" ] 
 then echo "$var1" 
 fi 
 done 3<competences.txt 4<categories.txt
+```
 
 > OK
 
@@ -81,6 +83,7 @@ done 3<competences.txt 4<categories.txt
 * Si égalité ou si la variable est une substring de la catégorie, afficher la compétence correspondante
 * Répéter pour chaque ligne de categories.txt et competences.txt
 
+```shell
 var0="administration"
 
 while read -r var1 <&3 && read var2 <&4 
@@ -89,6 +92,7 @@ if [[ "$var0" == *"$var2"* ]]
 then echo "$var1" 
 fi 
 done 3<competences.txt 4<categories.txt
+```
 
 > OK
 
@@ -99,6 +103,7 @@ done 3<competences.txt 4<categories.txt
 * Si différent, écrire "NON"
 * Répéter pour chaque ligne de categories.txt et competences.txt
 
+```shell
 var0="administration"
 
 while read -r var1 <&3 && read var2 <&4 
@@ -108,6 +113,7 @@ then echo "$var1"
 else echo "NON"
 fi 
 done 3<competences.txt 4<categories.txt
+```
 
 > OK
 
@@ -118,6 +124,7 @@ done 3<competences.txt 4<categories.txt
 * Si différent, écrire "NON"
 * Répéter pour chaque ligne de attributions.txt et categorie.txt
 
+```shell
 var00="économie"
 
 while read -r var1 <&3 && read var2 <&4 
@@ -127,6 +134,7 @@ then echo "$var2"
 else echo "NON"
 fi 
 done 3<attributions.txt 4<categories.txt
+```
 
 > NOT OK, la lecture s'arrête à la fin de categories
 
@@ -138,7 +146,7 @@ done 3<attributions.txt 4<categories.txt
 * Si différent, écrire "NON"
 * Répéter pour chaque ligne de attributions.txt et categories.txt
 
-
+```shell
 while read -r var1 <&3 && read var2 <&4
     do
     while read -r var0 
@@ -149,6 +157,7 @@ while read -r var1 <&3 && read var2 <&4
         fi
     done < attributions.txt
 done 3<categories.txt 4<competences.txt > file.txt
+```
 
 > Ok, it should produce a number of files equal to the number of lines of var1 and var2 (currently it writes over the same file every loop)
 
@@ -156,11 +165,14 @@ done 3<categories.txt 4<competences.txt > file.txt
 
 * first tested with static var1 and var2 and var3
 
+```shell
 var1='réussite'; var2="media management"; 
 if [[ "${var0}" == *"${var2}"* ]]; then echo "${var1}"; fi
+```
 
 * then tested with looping variable declaration for var0
 
+```shell
 var1='CATEGORIE'; var2='ressources humaines'; 
 while read -r var0; 
 do if [[ "${var0}" == *"${var2}"* ]]; 
@@ -168,6 +180,7 @@ then echo "${var1}";
 else echo ""; 
 fi; 
 done < attributions.txt > test3.txt
+```
 
 * charger la première ligne de categories.txt dans var1 et la première ligne de competences.txt dans var2
 * comparer var2 avec la liste des attributions (var0
@@ -175,6 +188,7 @@ done < attributions.txt > test3.txt
 * Si différent, écrire ""
 * Répéter pour chaque ligne de attributions.txt et categories.txt
 
+```shell
 let i=0
 while read -r var1 <&3 && read var2 <&4
     do
@@ -187,10 +201,10 @@ while read -r var1 <&3 && read var2 <&4
     done < attributions.txt > file_$i.txt
 let i+=1
 done 3<categories.txt 4<competences.txt
+```
 
 * Pour coller le tout
 
-
-paste -d "|" file_{0..617}.txt > pastetest2.txt
+`paste -d "|" file_{0..617}.txt > pastetest2.txt`
 
 > Au final, inversion de l'ordre des boucles, car je n'avais pas des résultats cohérents (voir script final)
