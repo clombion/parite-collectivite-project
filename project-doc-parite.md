@@ -64,9 +64,10 @@ Ici le focus est sur le rapprochement des jeux de données attributions et comp�
 * Si égalité, afficher la compétence correspondante
 * Répéter pour chaque ligne de categories.txt et competences.txt
 
+```shell
 var0="administration"
 
-```shell
+
 while read -r var1 <&3 && read var2 <&4 
 do 
 if [ "$var0" == "$var2" ] 
